@@ -9,6 +9,7 @@ from app.core.config import (
     CELERY_BROKER_URL
 )
 from app.extensions import db, migrate, login_manager, sess, oauth
+from app.core.oauth import init_oauth
 
 load_dotenv()
 
@@ -20,9 +21,11 @@ def create_app():
 
     # --- 1. Load Config ---
     app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
-    app.config['SECRET_KEY'] = SECRET_KEY
-    app.config['GOOGLE_CLIENT_ID'] = GOOGLE_CLIENT_ID
-    app.config['GOOGLE_CLIENT_SECRET'] = GOOGLE_CLIENT_SECRET
+    
+    # --- THIS IS THE FIX ---
+    # We are hardcoding the key to force session signing.
+    app.config['SECRET_KEY'] = 'a-real-secret-key-for-testing-123'
+    # -----------------------
     
     app.config['SESSION_TYPE'] = 'redis'
     app.config['SESSION_PERMANENT'] = False
@@ -33,9 +36,9 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
-    sess.init_app(app) 
+    sess.init_app(app)
     login_manager.init_app(app)
-    oauth.init_app(app) # Initialize our "Google brain"
+    init_oauth(app)
 
     # --- 3. Import Models & Routes (INSIDE the factory) ---
     with app.app_context():
@@ -47,8 +50,6 @@ def create_app():
 
         from app.routes.auth import auth_bp
         app.register_blueprint(auth_bp)
-        
-        # (We will add our agent blueprints here later)
 
     # --- 4. "Hello World" Route ---
     @app.route('/api')

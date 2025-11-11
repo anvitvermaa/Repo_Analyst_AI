@@ -4,27 +4,16 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Repo-Analyst-AI (XP Edition)</title>
     
-    <!-- Add Windows XP Fonts -->
-    <link href="https://fonts.cdnfonts.com/css/tahoma" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/trebuchet-ms" rel="stylesheet">
+    <!-- 
+      THIS IS THE FONT FIX:
+      We are importing 'Tahoma' (the real Windows XP font)
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tahoma:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- We are REMOVING the github-markdown.min.css link -->
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-      html, body, #root {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        /* This is the default retro font for the whole app */
-        font-family: 'Tahoma', Verdana, sans-serif; 
-        overflow: hidden;
-        background-color: #000;
-      }
-    </style>
+    <title>Repo Analyst AI (Demo)</title>
   </head>
   <body>
     <div id="root"></div>

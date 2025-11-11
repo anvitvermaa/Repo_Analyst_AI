@@ -1,19 +1,13 @@
-from authlib.integrations.flask_client import OAuth
+from app.extensions import oauth  # <-- IMPORT the shared object, don't create a new one
 from app.core.config import GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET
-from app.extensions import db
-from app.models.user import User
-from flask_login import login_user
-
-# 1. Create the OAuth "registry" object
-oauth = OAuth()
 
 def init_oauth(app):
     """
-    Initializes the OAuth registry with our app.
+    Initializes and registers the Google client with our main 'oauth' object.
+    We pass 'app' in so we can call init_app here.
     """
-    oauth.init_app(app)
+    oauth.init_app(app)  # <-- We will call this from our factory
     
-    # 2. Register "google" as a client
     oauth.register(
         name='google',
         client_id=GOOGLE_CLIENT_ID,
@@ -22,7 +16,7 @@ def init_oauth(app):
         access_token_params=None,
         authorize_url='https://accounts.google.com/o/oauth2/auth',
         authorize_params=None,
-        api_base_url='https://www.googleapis.com/oauth2/v1/',
+        api_base_url='https://www.googleapis.com/o/oauth2/v1/',
         client_kwargs={'scope': 'openid email profile'},
-        userinfo_endpoint='https://openidconnect.googleapis.com/v1/userinfo',
+        userinfo_endpoint='userinfo',
     )
