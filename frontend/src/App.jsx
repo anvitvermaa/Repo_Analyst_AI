@@ -287,12 +287,27 @@ function Window({
         <div className="title-bar-buttons">
           {/* Don't show min/max on shutdown or funding window */}
           {id !== 'shutdown' && id !== 'funding' && (
-            <>
-              <button className="window-button" onClick={onMinimize}><Minus size={16} /></button>
-              <button className="window-button" onClick={onMaximize}><Square size={16} /></button>
-            </>
+            // --- UPDATED MINIMIZE BUTTON ---
+            <button className="window-button minimize" onClick={onMinimize}>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="11" width="8" height="2" fill="white"/>
+              </svg>
+            </button>
           )}
-          <button className="window-button close" onClick={onClose}><X size={16} /></button>
+          {id !== 'shutdown' && id !== 'funding' && (
+            // --- UPDATED MAXIMIZE BUTTON ---
+            <button className="window-button maximize" onClick={onMaximize}>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="8" height="8" stroke="white" strokeWidth="2" fill="none"/>
+              </svg>
+            </button>
+          )}
+          {/* --- UPDATED CLOSE BUTTON --- */}
+          <button className="window-button close" onClick={onClose}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 6L12 12M12 6L6 12" stroke="white" strokeWidth="2"/>
+            </svg>
+          </button>
         </div>
       </div>
       <div className="w-full flex-grow overflow-y-auto xp-window-body">{children}</div>
@@ -468,8 +483,9 @@ function AnimatedChatDemo({ repoUrl, script }) {
             </div>
           ))}
           {!isComplete && (
+            // --- UPDATED LOADER: Now a spinning icon ---
             <div className="chat-bubble loading">
-              <Loader2 size={20} className="animate-spin" />
+              <Loader2 size={24} className="animate-spin text-gray-700" />
             </div>
           )}
           {isComplete && (
