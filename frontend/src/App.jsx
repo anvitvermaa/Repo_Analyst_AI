@@ -542,11 +542,11 @@ function ReadmeGeneratorApp() {
       <AgentDemoOverview
         icon={<FileText size={40} className="agent-overview-icon" />}
         title="Readme Generator"
-        onStartDemo={() => setStage('demo')}
+        onStartDemo={() => setStage('demo')}  
       >
         <p>This agent analyzes a repository's structure, dependencies, and code to automatically generate a high-quality `README.md` file.</p>
         <p><strong>Real-world steps:</strong><br />1. Clones the repo.<br />2. Analyzes dependencies (`requirements.txt`).<br />3. Scans source code for main components (`LangGraph` nodes).<br />4. Writes a full Readme with an LLM.</p>
-        <p><strong>In the demo:</strong> You'll watch a simulation of the agent analyzing your **'Multi-Agent-Telecom-Optimizer'** repo.</p>
+        <p><strong>In the demo:</strong> You'll watch a simulation of the agent analyzing my 'Multi-Agent-Telecom-Optimizer' repo.</p>
       </AgentDemoOverview>
     );
   }
@@ -595,7 +595,7 @@ function PathfinderApp() {
       >
         <p>This agent acts as an AI-powered GitHub search. It finds relevant repositories based on a *topic*, not just a name.</p>
         <p><strong>Real-world steps:</strong><br />1. Takes a user's query (e.g., "langgraph marketing").<br />2. Uses an LLM to find the best repos.<br />3. "Reads" each repo's Readme to write a summary.</p>
-        <p><strong>In the demo:</strong> You'll watch a simulation of the agent searching for **'langgraph multi-agent marketing'**.</p>
+        <p><strong>In the demo:</strong> You'll watch a simulation of the agent searching for langgraph multi-agent marketing.</p>
       </AgentDemoOverview>
     );
   }
@@ -626,7 +626,7 @@ function RepoAnalystApp() {
       >
         <p>This is a **Retrieval-Augmented Generation (RAG)** agent. It "reads" an entire codebase and lets you chat with it.</p>
         <p><strong>Real-world steps:</strong><br />1. User submits a repo URL.<br />2. Backend clones the repo, splits the code into chunks, and indexes it in a vector database (`ChromaDB`).<br />3. User asks a question.<br />4. The RAG agent finds relevant code chunks and uses an LLM to give a precise answer.</p>
-        <p><strong>In the demo:</strong> You'll watch a simulation of a user asking questions about your **'Multi-Agent-Telecom-Optimizer'** repo.</p>
+        <p><strong>In the demo:</strong> You'll watch a simulation of a user asking questions about your 'Multi-Agent-Telecom-Optimizer' repo.</p>
       </AgentDemoOverview>
     );
   }
