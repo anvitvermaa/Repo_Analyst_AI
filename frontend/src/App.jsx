@@ -267,7 +267,7 @@ function Window({
   // Special size for the small shutdown window
   if (id === 'shutdown') {
     windowStyles.width = '400px';
-    windowStyles.height = '220px';
+    windowStyles.height = '240px';
   }
 
   // Special size for funding window
@@ -324,7 +324,7 @@ function StartMenu({ user, onLogout }) {
           <Github size={32} className="start-menu-link-icon" />
           <span className="start-menu-link-label">My GitHub</span>
         </a>
-        <a href="https.www.linkedin.com/in/anvit-verma-b8133228a/" target="_blank" rel="noopener noreferrer" className="start-menu-link">
+        <a href="https://www.linkedin.com/in/anvit-verma-b8133228a/" target="_blank" rel="noopener noreferrer" className="start-menu-link">
           <Linkedin size={32} className="start-menu-link-icon" />
           <span className="start-menu-link-label">My LinkedIn</span>
         </a>
@@ -362,7 +362,7 @@ function AgentDemoOverview({ icon, title, children, onStartDemo }) {
 }
 
 // --- 8. NEW HELPER COMPONENT: Animated Log Demo ---
-// THIS IS THE FIX: Re-styled to be a black terminal
+// THIS IS THE FIX: Re-styled to be a grey box, not black terminal
 function AnimatedLogDemo({ repoUrl, script }) {
   const [lines, setLines] = useState([`> User request: ${repoUrl}`]);
   const [isComplete, setIsComplete] = useState(false);
@@ -395,22 +395,23 @@ function AnimatedLogDemo({ repoUrl, script }) {
   }, [script, repoUrl]); // Added repoUrl as dependency
 
   return (
-    <div className="terminal-window">
-      <div className="terminal-log-output">
+    // Use the standard inset border for the grey box
+    <div className="xp-inset-border" style={{height: '100%', backgroundColor: 'white', overflow: 'auto'}}>
+      <div style={{padding: '10px', fontFamily: "'Courier New', Courier, monospace", fontSize: '14px', color: '#333'}}>
         {lines.map((line, index) => (
-          <p key={index} className="terminal-log-line">
-            <span className="terminal-prompt">{`$`}</span>
+          <p key={index} style={{margin: '2px 0', whiteSpace: 'pre-wrap'}}>
+            <span style={{color: 'green', marginRight: '8px'}}>{`$`}</span>
             {line}
           </p>
         ))}
         {!isComplete && (
-          <div className="flex items-center">
-            <span className="terminal-prompt">{`$`}</span>
-            <span className="terminal-cursor"></span>
+          <div style={{display: 'flex', alignItems: 'center'}}>
+            <span style={{color: 'green', marginRight: '8px'}}>{`$`}</span>
+            <span style={{animation: 'blink 1s step-end infinite', background: '#333', width: '8px', height: '16px'}}></span>
           </div>
         )}
         {isComplete && (
-          <p className="terminal-line-complete">$ Demo complete. You can close this window.</p>
+          <p style={{color: 'blue', marginTop: '1rem'}}>$ Demo complete. You can close this window.</p>
         )}
         <div ref={logEndRef} />
       </div>
@@ -419,7 +420,7 @@ function AnimatedLogDemo({ repoUrl, script }) {
 }
 
 // --- 9. NEW HELPER COMPONENT: Animated Chat Demo ---
-// THIS IS THE FIX: Re-styled to be a black terminal
+// THIS IS THE FIX: Re-styled to be the chat bubbles you wanted
 function AnimatedChatDemo({ repoUrl, script }) {
   const [messages, setMessages] = useState([]);
   const [isComplete, setIsComplete] = useState(false);
@@ -453,39 +454,34 @@ function AnimatedChatDemo({ repoUrl, script }) {
   }, [script, repoUrl]);
 
   return (
-    <div className="terminal-chat-window">
-      <div className="terminal-chat-messages" ref={chatEndRef}>
-        {messages.map((msg, index) => (
-          <div key={index} className="terminal-chat-message">
-            {msg.sender === 'user' ? (
-              <p className="terminal-line-user">
-                <span className="terminal-prompt">User:</span>
-                {msg.text}
-              </p>
-            ) : (
-              <div className="terminal-line-ai">
-                <p><span className="terminal-prompt">AI:</span></p>
-                {/* Use ReactMarkdown for AI responses to format code blocks */}
-                <article className="prose prose-sm prose-tahoma">
-                  <ReactMarkdown>{msg.text}</ReactMarkdown>
-                </article>
-              </div>
-            )}
-          </div>
-        ))}
-        {!isComplete && (
-          <div className="flex items-center">
-            <span className="terminal-prompt text-white">AI:</span>
-            <span className="terminal-cursor"></span>
-          </div>
-        )}
-        {isComplete && (
-          <p className="terminal-line-complete">$ Demo complete. You can close this window.</p>
-        )}
+    <div className="chat-window">
+      <div className="chat-messages" ref={chatEndRef}>
+        <div className="chat-message-container">
+          {messages.map((msg, index) => (
+            <div 
+              key={index} 
+              className={`chat-bubble ${msg.sender === 'user' ? 'user' : 'ai'}`}
+            >
+              <article className="prose prose-sm prose-tahoma">
+                <ReactMarkdown>{msg.text}</ReactMarkdown>
+              </article>
+            </div>
+          ))}
+          {!isComplete && (
+            <div className="chat-bubble loading">
+              <Loader2 size={20} className="animate-spin" />
+            </div>
+          )}
+          {isComplete && (
+            <p style={{textAlign: 'center', fontSize: '12px', color: '#555', marginTop: '1rem'}}>
+              Demo complete. You can close this window.
+            </p>
+          )}
+        </div>
       </div>
-      <div className="terminal-chat-input-bar">
-        <input type="text" placeholder="Demo in progress... Please watch." className="terminal-chat-input" disabled={true} />
-        <button type="submit" disabled={true} className="terminal-chat-button">
+      <div className="chat-input-bar">
+        <input type="text" placeholder="Demo in progress... Please watch." className="chat-input" disabled={true} />
+        <button type="submit" disabled={true} className="chat-send-button">
           <Send size={20} />
         </button>
       </div>
@@ -592,7 +588,7 @@ function PathfinderApp() {
 }
 
 
-// --- 12. AI Code Analyst App (PERFECT - NO CHANGE) ---
+// --- 12. AI Code Analyst App (NOW USES CHAT BUBBLES) ---
 const ANALYST_SCRIPT = [
   { sender: 'user', text: 'How does this project ensure marketing message quality?', delay: 2000 },
   { sender: 'ai', text: "It uses a stateful **LangGraph** workflow with a 'Supervisor-Review' loop. A 'Creative' agent generates the message, and a 'Supervisor' LLM (LLaMA3) reviews it for clarity and tone. If the score is below a set threshold, it's sent back to the creative agent for auto-regeneration.", delay: 4000 },
@@ -772,63 +768,63 @@ function RefactorModal({ originalCode, onClose }) {
 
 
 // --- 15. UPDATED FUNDING COMPONENT ---
-// This now has the new text and styles
+// THIS IS THE FIX: New text and layout
 function FundProjectApp() {
   return (
-    <div className="funding-window-container">
-      <DollarSign size={40} className="funding-window-icon text-green-600" />
-      <h2 className="funding-window-title">Support This Project</h2>
-      <p className="funding-window-text">
-        This is a passion project built to demonstrate the power of AI agents.
-        To bring these agents to life for everyone, the backend requires a cloud GPU server to run 24/7.
-      </p>
-      <p className="funding-window-text">
-        If you're inspired by this demo, please consider contributing. 
-        Your support helps cover server costs and fuels future development. Thank you!
-      </p>
-      
-      <div className="funding-button-container">
-        <a 
-          href="https.www.patreon.com" // <-- TODO: Change this to your Patreon link
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="funding-window-button funding-button-patreon xp-outset-border"
-        >
-          Support on Patreon
-        </a>
-        <a 
-          href="https.www.github.com/sponsors" // <-- TODO: Change this to your GitHub Sponsors link
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="funding-window-button funding-button-github xp-outset-border"
-        >
-          Sponsor on GitHub
-        </a>
-        <p className="text-sm text-gray-500">
-          (You can also reach out about GPU grants)
+    <div className="info-window-container">
+      <div className="info-window-icon">
+        <DollarSign size={48} className="text-green-600" />
+      </div>
+      <div className="info-window-content">
+        <h2 className="info-window-title">Support This Project</h2>
+        <p className="info-window-text">
+          This is a passion project built to demonstrate the power of AI agents. To bring these agents to life for everyone, the backend requires a cloud GPU server to run 24/7.
         </p>
+        <p className="info-window-text" style={{marginBottom: '0.5rem'}}>
+          If you're inspired by this demo and would like to support its future, please consider contributing. Thank you!
+        </p>
+        
+        <div className="funding-button-container">
+          <a 
+            href="https://www.patreon.com" // <-- TODO: Change this to your Patreon link
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="funding-window-button funding-button-patreon xp-outset-border"
+          >
+            Support on Patreon
+          </a>
+          <a 
+            href="https://www.github.com/sponsors" // <-- TODO: Change this to your GitHub Sponsors link
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="funding-window-button funding-button-github xp-outset-border"
+          >
+            Sponsor on GitHub
+          </a>
+        </div>
       </div>
     </div>
   );
 }
 
 // --- 16. NEW "SHUT DOWN" COMPONENT ---
-// This is the new window that opens when you click "Log Off"
-// It uses the new styles for alignment
+// THIS IS THE FIX: New text and layout
 function ShutDownWindow() {
   return (
-    <div className="shutdown-window-container">
-      <Power size={40} className="shutdown-window-icon text-red-500" />
-      <h2 className="shutdown-window-title">Thank You for Visiting!</h2>
-      <p className="shutdown-window-text">
-        This demo is running as a static site. The full AI backend requires a cloud GPU server to run 24/7, which is expensive.
-      </p>
-      <p className="shutdown-window-text">
-        If you'd like to help bring this project to life, please check out the **"Fund Project"** icon on the desktop.
-      </p>
-      <p className="text-sm text-gray-500">
-        (You can close this window to return to the desktop)
-      </p>
+    <div className="info-window-container">
+      <div className="info-window-icon">
+        <Power size={48} className="text-red-500" />
+      </div>
+      <div className="info-window-content">
+        <h2 className="info-window-title">Thank You for Visiting!</h2>
+        <p className="info-window-text">
+          This AI backend requires a cloud GPU server to run 24/7, which is expensive.
+          This demo runs locally in your browser to showcase the full vision of the project.
+        </p>
+        <p className="info-window-text">
+          If you'd like to help bring this project to life, please check out the **"Fund Project"** icon on the desktop.
+        </p>
+      </div>
     </div>
   );
 }
