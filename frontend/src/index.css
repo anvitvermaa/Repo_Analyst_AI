@@ -598,98 +598,53 @@ body {
   color: #374151; /* text-gray-700 */
   margin-bottom: 1rem; /* mb-4 */
 }
-.funding-window-button {
-  padding-left: 1rem; /* px-4 */
-  padding-right: 1rem; /* px-4 */
-  padding-top: 0.75rem; /* py-3 */
-  padding-bottom: 0.75rem; /* py-3 */
-  color: white;
-  font-weight: 700; /* font-bold */
-  border-radius: 0.125rem; /* rounded-sm */
-  text-decoration: none;
-  display: block;
-  width: 100%;
-}
-.funding-window-button:hover {
-  filter: brightness(1.1);
-}
-.funding-window-button:active {
-  filter: brightness(0.95);
-}
-.funding-button-patreon {
-  background-color: #ef4444; /* bg-red-500 */
-}
-.funding-button-github {
-  background-color: #1f2937; /* bg-gray-800 */
-}
-.funding-button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem; /* gap-4 */
-  width: 100%;
-  max-width: 320px; /* max-w-xs */
-  margin-top: 0.5rem;
-}
 
 /*
-  NEW STYLES FOR THE FUNDING WIDGET
+  NEW STYLES FOR THE FUNDING WIDGET (NOW A WINDOW)
 */
-.demo-info-widget {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  width: 400px;
-  height: 400px;
-  z-index: 40; /* Just below the taskbar */
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  border-top: 1px solid #c0c0c0;
-  border-left: 1px solid #c0c0c0;
-  border-right: 1px solid #404040;
-  border-bottom: 1px solid #404040;
-  border-radius: 8px 8px 0 0;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.demo-info-terminal {
+.funding-window-terminal {
   background-color: #0c0c0c;
   padding: 0.75rem; /* 12px */
-  border-bottom: 1px solid #0058d0;
-  flex-shrink: 0;
+  border-radius: 0.25rem; /* 4px */
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  margin-bottom: 1rem; /* 16px */
+  flex-shrink: 0; /* Don't let it shrink */
 }
-.demo-info-marquee {
+.funding-window-marquee {
   font-family: 'Pixelify Sans', 'Tahoma', sans-serif;
   font-size: 1.1rem;
   font-weight: 700;
   color: white;
   white-space: nowrap; /* Keep it on one line */
 }
-.demo-info-body {
+
+.funding-window-info {
   padding: 1rem;
-  background-color: #ece9d8;
+  background-color: #ffffff;
+  border: 1px solid #7f9db9;
+  box-shadow: inset 1px 1px 2px #d0d0d0;
   flex-grow: 1; /* Take remaining space */
   overflow-y: auto;
-  color: #333;
 }
-.demo-info-body h3 {
+.funding-window-info h3 {
   font-size: 1.1rem;
   font-weight: 700;
   color: #004e94;
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
-.demo-info-body p {
+.funding-window-info p {
   font-size: 0.9rem;
   color: #333;
   margin-bottom: 0.75rem;
   line-height: 1.4;
 }
-.demo-info-body a {
+.funding-window-info a {
   color: #004e94;
   font-weight: 700;
   text-decoration: none;
 }
-.demo-info-body a:hover {
+.funding-window-info a:hover {
   text-decoration: underline;
 }
 .demo-info-patreon-link {
