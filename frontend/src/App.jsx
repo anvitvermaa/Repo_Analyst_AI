@@ -5,7 +5,7 @@ import {
   BrainCircuit, Send, ShieldCheck, DollarSign, Power, LogOut
 } from 'lucide-react';
 
-const XP_WALLPAPER_URL = "/bliss.jpg";
+const XP_WALLPAPER_URL = `${import.meta.env.BASE_URL}bliss.jpg`;
 
 // --- 1. Main App (The "OS") ---
 export default function App() {
